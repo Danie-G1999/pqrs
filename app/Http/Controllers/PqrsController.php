@@ -42,21 +42,50 @@ class PqrsController extends Controller
         if ($request->hasFile('archivo')){
             // Obtiene el archivo cargado
             $archivo = $request->file('archivo');
+
+            // Genera un nombre único para el archivo
+            $nombreArchivo = uniqid() . '.' . $archivo->getClientOriginalExtension();
             // Guarda el archivo en la carpeta de almacenamiento 'public/storage'
-            $ruta = $archivo->store('archivos');
-            $solicitud->archivo = $ruta;
+            $archivo->storeAs('public/archivos', $nombreArchivo);
+            // $ruta = $archivo->store('public/archivos');
+            $solicitud->archivo = $nombreArchivo;
         }
         // Verifica si hay un usuario autenticado y lo asocia con la solicitud
         if (auth()->check()) {
             $solicitud->id_usuario = auth()->user()->id;
         }
         $solicitud->estado = 'P';
-        $solicitud->radicado = Str::random(6);          // Genera y guarda el radicado unico
+        $solicitud->radicado = 'RAD'.Str::random(3);          // Genera y guarda el radicado unico
         $solicitud->fecha_creacion = Carbon::now();
         $solicitud->save();
         return view('/dashboard', ['radicado' => $solicitud->radicado] ) ;
     }
 
+    // Funcion para listar las solicitudes por cliente
+    public function listadoSolicitudes (){
+
+        
+        $solicitudes = Pqrs::join('tipo_solicitud', 'solicitudes.tipo_id', '=', 'tipo_solicitud.id')
+            ->select('solicitudes.*', 'tipo_solicitud.nombre as tipo')
+            ->where('solicitudes.id_usuario', auth()->user()->id)
+            ->get();
+        // $solicitudes = Pqrs::find(auth()->user()->id)->get();
+
+
+        
+        return view('listar_solicitud', ['solicitudes' => $solicitudes]);
+    }
+
+    // Funcion para listar todas las solicitudes
+    public function listadoAdmin (){
+
+        $solicitudes = Pqrs::join('tipo_solicitud', 'solicitudes.tipo_id', '=', 'tipo_solicitud.id')
+            ->select('solicitudes.*', 'tipo_solicitud.nombre as tipo_solicitud')
+            ->get();
+        // $solicitudes = Pqrs::all();
+
+        return view('solicitudes_admin', ['solicitudes' => $solicitudes]);
+    }
     /**
      * Display the specified resource.
      */

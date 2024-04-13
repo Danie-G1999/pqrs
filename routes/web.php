@@ -30,12 +30,16 @@ Route::get('/dashboard', function () {
 //     return view('solicitud');
 // })->middleware(['auth', 'verified'])->name('solicitud');
 
+// Rutas para formulario y listado de solicitudes para el cliente logeado
 Route::get('/solicitar', [PqrsController::class, 'index'])->middleware(['auth', 'verified'])->name('solicitud');
 Route::post('/solicitar', [PqrsController::class, 'store'])->middleware(['auth', 'verified'])->name('guardar');
-// Ruta para listar las solicitudes del usuario logeado
-Route::get('/listar_solicitudes', function () {
-    return view('listar_solicitud');
-})->middleware(['auth', 'verified'])->name('listar_solicitud');
+Route::get('/listar_solicitudes', [PqrsController::class, 'listadoSolicitudes'])->middleware(['auth', 'verified'])->name('listar_solicitud');
+
+// Ruta para el administrador
+Route::get('/lista_admin', [PqrsController::class, 'listadoAdmin'])->middleware(['auth', 'verified'])->name('lista_admin');
+// Route::get('/listar_solicitudes', function () {
+//     return view('listar_solicitud');
+// })->middleware(['auth', 'verified'])->name('listar_solicitud');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -29,7 +29,7 @@
                             </x-nav-link>
                         @else
                             <!-- Aquí puedes colocar contenido alternativo o un mensaje de error -->
-                            <x-nav-link :href="route('dashboard')" >
+                            <x-nav-link :href="route('lista_admin')" :active="request()->routeIs('lista_admin')">
                                 {{ __('Solicitudes') }}
                             </x-nav-link>
                             <x-nav-link :href="route('dashboard')" >
