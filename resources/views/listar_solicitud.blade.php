@@ -36,6 +36,9 @@
                                     <th scope="col" class="px-6 py-3">
                                         Fecha Solicitud
                                     </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Accion
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,7 +51,7 @@
                                             {{ $item->radicado }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $item->tipo }}
+                                            {{ $item->tipo_solicitud }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $item->descripcion }}
@@ -84,33 +87,51 @@
                                         <td class="px-6 py-4">
                                             {{ $item->fecha_creacion }}
                                         </td>
+                                        <td class="px-6 py-4 text-center">
+                                        <button onclick="mostrarDetalle('{{ $item->id }}', '{{ $item->tipo_solicitud }}', '{{ $item->descripcion }}', '{{ $item->radicado }}', '{{ $item->respuesta }}')" class="text-indigo-600 hover:text-indigo-900">Ver Detalles</button>
+                                            
+                                        </td>
                                     </tr>
                                 @endforeach
-                                <!-- <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        1
-                                    </th>
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        Apple iMac 27"
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Silver
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        PC Desktop
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        $3999
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                    </td>
-                                </tr> -->
                             </tbody>
                         </table>
+                        <!-- Modal -->
+                        <div id="modal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center hidden">
+                            <div class="bg-gray-800 p-8 rounded-lg " style="width: 30%;">
+                                <h2 class="text-black dark:text-white font-bold mb-4">Detalles del Registro</h2>
+                                
+                                <div id="detalleRegistro"></div>
+                                
+                                <button onclick="cerrarModal()" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Cerrar</button>
+                            
+                                
+                            </div>
+                        </div>
+                        <!-- Modal -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+    function mostrarDetalle(id, tipo_solicitud, descripcion, radicado, respuesta) {
+        // Aquí puedes realizar una solicitud AJAX para obtener los detalles del registro por su ID
+        // Por ahora, simplemente mostraremos el ID del registro en el modal
+        document.getElementById('detalleRegistro').innerHTML = `
+      <p><strong>Tipo:</strong> ${tipo_solicitud}</p>
+      <p><strong>Radicado:</strong> ${radicado}</p>
+      <p><strong>Descripción:</strong> ${descripcion}</p>
+      <br>
+      <p><strong>Respuesta:</strong> ${respuesta}</p>
+    `;
+
+        // Mostrar el modal
+        document.getElementById('modal').classList.remove('hidden');
+    }
+
+    function cerrarModal() {
+        // Ocultar el modal
+        document.getElementById('modal').classList.add('hidden');
+    }
+    </script>
 </x-app-layout>

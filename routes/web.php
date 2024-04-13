@@ -37,6 +37,7 @@ Route::get('/listar_solicitudes', [PqrsController::class, 'listadoSolicitudes'])
 
 // Ruta para el administrador
 Route::get('/lista_admin', [PqrsController::class, 'listadoAdmin'])->middleware(['auth', 'verified'])->name('lista_admin');
+Route::post('/edit_solicitud', [PqrsController::class, 'edit'])->middleware(['auth', 'verified'])->name('edit_solicitud');
 // Route::get('/listar_solicitudes', function () {
 //     return view('listar_solicitud');
 // })->middleware(['auth', 'verified'])->name('listar_solicitud');

@@ -21,6 +21,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_usuario');
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->string('radicado', 10)->nullable();
+            $table->string('tipo_respuesta', 1)->nullable();
+            $table->mediumText('respuesta')->nullable();
+            $table->dateTime('fecha_respuesta')->nullable();
             $table->dateTime('fecha_creacion');
 
             $table->timestamps();

@@ -66,7 +66,7 @@ class PqrsController extends Controller
 
         
         $solicitudes = Pqrs::join('tipo_solicitud', 'solicitudes.tipo_id', '=', 'tipo_solicitud.id')
-            ->select('solicitudes.*', 'tipo_solicitud.nombre as tipo')
+            ->select('solicitudes.*', 'tipo_solicitud.nombre as tipo_solicitud')
             ->where('solicitudes.id_usuario', auth()->user()->id)
             ->get();
         // $solicitudes = Pqrs::find(auth()->user()->id)->get();
@@ -97,9 +97,34 @@ class PqrsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-        //
+        $id = $request->input('id');
+        $tipo_respuesta = $request->input('tipo_respuesta');
+        $respuesta = $request->input('respuesta');
+
+        // Obtener el usuario que deseas actualizar
+        $pqrs = Pqrs::find($id);
+
+        // Actualizamos los campos necesarios
+        if($tipo_respuesta == 'R'){
+            $pqrs->estado = 'R';
+        } else {
+            $pqrs->estado = 'P';
+        }
+        $pqrs->tipo_respuesta = $tipo_respuesta;
+        $pqrs->respuesta = $respuesta;
+        $pqrs->fecha_respuesta = Carbon::now();
+        $pqrs->save();
+
+        $solicitudes = Pqrs::join('tipo_solicitud', 'solicitudes.tipo_id', '=', 'tipo_solicitud.id')
+            ->select('solicitudes.*', 'tipo_solicitud.nombre as tipo_solicitud')
+            ->get();
+
+            return view('solicitudes_admin', [
+                'solicitudes' => $solicitudes,
+                'status' => 'Ok, Registro Actualizado'
+            ]);
     }
 
     /**
