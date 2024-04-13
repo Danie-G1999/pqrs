@@ -37,6 +37,9 @@
                                         Fecha Solicitud
                                     </th>
                                     <th scope="col" class="px-6 py-3">
+                                        Fecha Respuesta
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
                                         Accion
                                     </th>
                                 </tr>
@@ -86,6 +89,14 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $item->fecha_creacion }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            @if($item->fecha_respuesta)
+                                            {{ $item->fecha_respuesta }}
+                                            @else
+                                            Sin Respuesta 
+                                            @endif
+                                            
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                         <button onclick="mostrarDetalle('{{ $item->id }}', '{{ $item->tipo_solicitud }}', '{{ $item->descripcion }}', '{{ $item->radicado }}', '{{ $item->respuesta }}')" class="text-indigo-600 hover:text-indigo-900">Ver Detalles</button>
