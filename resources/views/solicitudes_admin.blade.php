@@ -4,10 +4,10 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-
+   
     <div class="py-12">
         
-        
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-5">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -91,16 +91,40 @@
                                         {{$item->fecha_creacion}}
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Responder</a>
+                                    <button onclick="mostrarDetalle('{{ $item->id }}')" class="text-indigo-600 hover:text-indigo-900">Ver Detalles</button>
+                                        <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Responder</a> -->
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        <!-- Modal -->
+                        <div id="modal" class="fixed inset-0 bg-gray-500  bg-opacity-75 flex justify-center items-center hidden">
+                            <div class="bg-gray-800 p-8 rounded-lg ">
+                                <h2 class="text-black dark:text-white font-bold mb-4">Detalles del Registro</h2>
+                                <div id="detalleRegistro"></div>
+                                <button onclick="cerrarModal()" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Cerrar</button>
+                            </div>
+                        </div>
+                        <!-- Modal -->
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
+    <script>
+    function mostrarDetalle(id) {
+        // Aquí puedes realizar una solicitud AJAX para obtener los detalles del registro por su ID
+        // Por ahora, simplemente mostraremos el ID del registro en el modal
+        document.getElementById('detalleRegistro').innerText = 'ID del registro: ' + id;
+
+        // Mostrar el modal
+        document.getElementById('modal').classList.remove('hidden');
+    }
+
+    function cerrarModal() {
+        // Ocultar el modal
+        document.getElementById('modal').classList.add('hidden');
+    }
+    </script>
 </x-app-layout>
