@@ -19,12 +19,14 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\User::factory()->create([
             'name' => 'Cliente',
+            'tipo' => '1',
             'email' => 'cliente@gmail.com',
             'password' => Hash::make('12345678'),
         ]);
 
         \App\Models\User::factory()->create([
             'name' => 'Administrador',
+            'tipo' => '2',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('12345678'),
         ]);

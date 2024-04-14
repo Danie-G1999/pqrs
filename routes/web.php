@@ -34,10 +34,12 @@ Route::get('/dashboard', function () {
 Route::get('/solicitar', [PqrsController::class, 'index'])->middleware(['auth', 'verified'])->name('solicitud');
 Route::post('/solicitar', [PqrsController::class, 'store'])->middleware(['auth', 'verified'])->name('guardar');
 Route::get('/listar_solicitudes', [PqrsController::class, 'listadoSolicitudes'])->middleware(['auth', 'verified'])->name('listar_solicitud');
+Route::delete('/eliminar/{id}', [PqrsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('eliminar');
 
 // Ruta para el administrador
 Route::get('/lista_admin', [PqrsController::class, 'listadoAdmin'])->middleware(['auth', 'verified'])->name('lista_admin');
 Route::post('/edit_solicitud', [PqrsController::class, 'edit'])->middleware(['auth', 'verified'])->name('edit_solicitud');
+Route::delete('/eliminar_solicitud/{id}', [PqrsController::class, 'delete'])->middleware(['auth', 'verified'])->name('eliminar.admin');
 // Route::get('/listar_solicitudes', function () {
 //     return view('listar_solicitud');
 // })->middleware(['auth', 'verified'])->name('listar_solicitud');

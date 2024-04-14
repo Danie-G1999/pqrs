@@ -108,9 +108,14 @@
                                     <td class="px-6 py-4">
                                         {{$item->fecha_creacion}}
                                     </td>
-                                    <td class="px-6 py-4 text-center">
+                                    <td class="px-6 py-4 text-center flex gap-4">
                                     <button onclick="mostrarDetalle('{{ $item->id }}', '{{ $item->tipo_solicitud }}', '{{ $item->descripcion }}', '{{ $item->radicado }}')" class="text-indigo-600 hover:text-indigo-900">Ver Detalles</button>
-                                        
+                                    <form method="POST" action="{{ route('eliminar.admin', $item->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input class="hidden" value="{{$item->id}}">
+                                        <button class="submit" class="text-indigo-600 hover:text-indigo-900">Eliminar</button>
+                                    </form>
                                     </td>
                                 </tr>
                                 @endforeach

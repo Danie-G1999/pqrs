@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     @auth
-                        @if(auth()->user()->name === 'Cliente')
+                        @if(auth()->user()->tipo == '1')
                             <!-- Aquí colocas el contenido que deseas mostrar solo si el usuario específico está autenticado -->
                             <x-nav-link :href="route('solicitud')" :active="request()->routeIs('solicitud')">
                                 {{ __('Realizar PQRS') }}
@@ -24,16 +24,10 @@
                             <x-nav-link :href="route('listar_solicitud')" :active="request()->routeIs('listar_solicitud')">
                                 {{ __('Mis Solicitudes') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('dashboard')" >
-                                {{ __('Responder Encuesta') }}
-                            </x-nav-link>
                         @else
                             <!-- Aquí puedes colocar contenido alternativo o un mensaje de error -->
                             <x-nav-link :href="route('lista_admin')" :active="request()->routeIs('lista_admin')">
                                 {{ __('Solicitudes') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('dashboard')" >
-                                {{ __('Encuestas') }}
                             </x-nav-link>
                         @endif
                     @else

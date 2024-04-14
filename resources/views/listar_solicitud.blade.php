@@ -11,8 +11,8 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("Listado de mis solicitudes") }}
 
-                    <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style="height: 450px;">
-                        <table class="w-full h-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="top-0 sticky text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
@@ -39,7 +39,7 @@
                                     <th scope="col" class="px-6 py-3">
                                         Fecha Respuesta
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-center">
                                         Accion
                                     </th>
                                 </tr>
@@ -98,9 +98,15 @@
                                             @endif
                                             
                                         </td>
-                                        <td class="px-6 py-4 text-center">
-                                        <button onclick="mostrarDetalle('{{ $item->id }}', '{{ $item->tipo_solicitud }}', '{{ $item->descripcion }}', '{{ $item->radicado }}', '{{ $item->respuesta }}')" class="text-indigo-600 hover:text-indigo-900">Ver Detalles</button>
-                                            
+                                        <td class="px-6 py-4 text-center flex gap-4">
+                                        <button onclick="mostrarDetalle('{{ $item->id }}', '{{ $item->tipo_solicitud }}', '{{ $item->descripcion }}', '{{ $item->radicado }}', '{{ $item->respuesta }}')" class="text-indigo-600 hover:text-indigo-900">Detalles</button>
+                                        
+                                        <form method="POST" action="{{ route('eliminar', $item->id) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input class="hidden" value="{{$item->id}}">
+                                            <button class="submit" class="text-indigo-600 hover:text-indigo-900">Eliminar</button>
+                                        </form>    
                                         </td>
                                     </tr>
                                 @endforeach

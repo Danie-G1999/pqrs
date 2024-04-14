@@ -140,6 +140,29 @@ class PqrsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $solicitud = pqrs::findOrFail($id);
+        $solicitud->delete();
+
+        $solicitudes = Pqrs::join('tipo_solicitud', 'solicitudes.tipo_id', '=', 'tipo_solicitud.id')
+            ->select('solicitudes.*', 'tipo_solicitud.nombre as tipo_solicitud')
+            ->get();
+
+        return view('solicitudes_admin', [
+            'solicitudes' => $solicitudes,
+            'status' => 'Registro Eliminado Exitosamente'
+        ]);
+        
+    }
+
+    public function delete(string $id){
+        $solicitud = pqrs::findOrFail($id);
+        $solicitud->delete();
+
+        $solicitudes = Pqrs::join('tipo_solicitud', 'solicitudes.tipo_id', '=', 'tipo_solicitud.id')
+            ->select('solicitudes.*', 'tipo_solicitud.nombre as tipo_solicitud')
+            ->get();
+        // $solicitudes = Pqrs::all();
+
+        return view('solicitudes_admin', ['solicitudes' => $solicitudes]);
     }
 }
