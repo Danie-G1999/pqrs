@@ -1,0 +1,19 @@
+Hello
+I am Juan Daniel Guzman
+
+Below I will indicate the commands to be able to start the Laravel project
+
+***************Commands*******************:
+
+Composer install
+npm install
+
+php artisan storage:link ( for save files)
+
+php artisan migrate
+php artisan db:seed
+php artisan db:seed --Class=TipoSolicitudSeeder
+
+**********Run Software********************
+php artisan serve
+npm run dev
